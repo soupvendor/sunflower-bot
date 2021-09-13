@@ -5,8 +5,6 @@ import logging
 from discord.ext import commands
 from dotenv import load_dotenv
 
-
-
 ##Intents###
 intents = discord.Intents.default()
 intents.members = True
@@ -24,7 +22,6 @@ logger.addHandler(handler)
 TOKEN = os.getenv('TOKEN')
 client = commands.Bot(command_prefix = '.', intents=intents)
 
-
 @client.command()
 async def load(ctx, extension):
     client.load_extension(f"cogs.{extension}")
@@ -40,11 +37,10 @@ for filename in os.listdir("./cogs"):
     else:
         print(f'Unable to load {filename[:-3]}')
 
-
-
 ############
 ###Events###
 ############
+
 @client.event
 async def on_ready():
     print("Bot is ready.")
@@ -69,18 +65,5 @@ async def on_member_remove(member):
     print(f"{member} has left the server!")
     w.write(f"{member} has left the server!\n")
     w.close()
-
-############
-##Commands##
-############
-
-@client.command()
-async def ping(ctx):
-    await ctx.send(f"Pong! {round(client.latency * 1000)}ms!")
-
-@client.command()
-async def clear(ctx, amount=5):
-    await ctx.channel.purge(limit=amount + 1)
-
 
 client.run(TOKEN)
