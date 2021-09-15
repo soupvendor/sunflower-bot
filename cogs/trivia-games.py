@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import random
+import requests
 
 
 
@@ -37,6 +38,19 @@ class Trivia(commands.Cog):
     @commands.command()
     async def kd(self, ctx):
         await ctx.send("https://i.pinimg.com/474x/57/65/40/5765406c444679a20c078831b232b313.jpg")
+    @commands.command()
+    async def cat(self, ctx):
+      response = requests.get('https://aws.random.cat/meow')
+      data = response.json()
+      embed = discord.Embed(
+          title = 'Kitty Cat 🐈',
+          description = 'Cats :star_struck:',
+          colour = discord.Colour.purple()
+          )
+      embed.set_image(url=data['file'])            
+      embed.set_footer(text="")
+      await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Trivia(bot))
